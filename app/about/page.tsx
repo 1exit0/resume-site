@@ -1,9 +1,9 @@
-export const metadata = {
-  title: 'درباره من | رزومه من',
-  description: 'معرفی کامل، مهارت‌ها و گواهی‌نامه‌های من به عنوان توسعه‌دهنده فرانت‌اند با تخصص در React، Next.js و تکنولوژی‌های مدرن.',
-};
+'use client';
+
+
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function AboutPage() {
   return (
@@ -11,13 +11,14 @@ export default function AboutPage() {
       <h1 className="text-4xl font-bold text-center mb-8">درباره من</h1>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
-        <Image
+        <motion.img
           src="/images/avatar.jpg"
           alt="عکس من"
           width={120}
           height={120}
-          className="rounded-full border-4 border-gray-700 object-cover"
-          priority
+          className="rounded-full border-4 border-purple-500 object-cover shadow-xl"
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          transition={{ duration: 0.3 }}
         />
         <p className="text-gray-300 leading-7 text-justify">
           سلام! من محمدحسین نمکی، دانشجوی کارشناسی رشته کامپیوتر در دانشگاه آزاد

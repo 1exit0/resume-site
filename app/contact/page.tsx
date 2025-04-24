@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import axios from 'axios';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -16,13 +18,11 @@ export default function ContactPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://formspree.io/f/xvgaoyad', {
-        method: 'POST',
+      const response = await axios.post('https://formspree.io/f/xvgaoyad', form, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         setSuccess(true);
         setForm({ name: '', email: '', message: '' });
       }
@@ -33,15 +33,47 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">ارتباط با من</h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl font-bold mb-6 text-center"
+      >
+        ارتباط با من
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="text-center text-gray-300 mb-4"
+      >
+        همچنین می‌توانید با شماره زیر تماس بگیرید:{' '}
+        <a
+          href="tel:+989982204403"
+          className="text-purple-400 hover:text-purple-300 transition"
+        >
+          📞 09982204403
+        </a>
+      </motion.p>
 
       {success && (
-        <p className="bg-green-600 text-white text-center py-2 rounded-lg mb-4">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="bg-green-600 text-white text-center py-2 rounded-lg mb-4"
+        >
           پیام شما با موفقیت ارسال شد!
-        </p>
+        </motion.p>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <motion.form
+        onSubmit={handleSubmit}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        className="space-y-4"
+      >
         <input
           type="text"
           name="name"
@@ -75,7 +107,7 @@ export default function ContactPage() {
         >
           ارسال پیام
         </button>
-      </form>
+      </motion.form>
     </div>
   );
 }

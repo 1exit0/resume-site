@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 const projectData = [
   {
@@ -35,20 +36,37 @@ export default function ProjectDetailPage({
 
   return (
     <div className="min-h-screen py-8 px-4 space-y-6">
-      <h1 className="text-3xl font-bold text-white text-center">
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl font-bold text-white text-center"
+      >
         پروژه: {project.title}
-      </h1>
-      <p className="text-gray-400 text-center">{project.description}</p>
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="text-gray-400 text-center"
+      >
+        {project.description}
+      </motion.p>
 
       {project.embed ? (
-        <div className="w-full h-[85vh] rounded-xl overflow-hidden shadow-lg">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="w-full h-[85vh] rounded-xl overflow-hidden shadow-lg"
+        >
           <iframe
             src={project.link}
             title={project.title}
             className="w-full h-full border-0"
             allowFullScreen
           />
-        </div>
+        </motion.div>
       ) : (
         <a
           href={project.link}

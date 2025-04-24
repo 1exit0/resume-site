@@ -35,16 +35,13 @@ export default function ProjectsPage() {
       <h1 className="text-4xl font-bold text-center mb-6">پروژه‌ها</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, index) => (
-          <Link key={index} href={`/projects/${project.slug}`} legacyBehavior>
-            <a className="block">
-              <ProjectCard
-                title={project.title}
-                description={project.description}
-                link={project.link}
-                embed={false}
-              />
-            </a>
-          </Link>
+          <ProjectCard
+            key={index}
+            title={project.title}
+            description={project.description}
+            link={`/projects/${project.slug}`}
+            embed={false}
+          />
         ))}
       </div>
     </div>
