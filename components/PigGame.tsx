@@ -1,5 +1,40 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
+
+interface PlayerPanelProps {
+  playerNumber: number;
+  score: number;
+  currentScore: number;
+  isActive: boolean;
+  isPlaying: boolean;
+}
+
+const PlayerPanel: React.FC<PlayerPanelProps> = ({
+  playerNumber,
+  score,
+  currentScore,
+  isActive,
+  isPlaying,
+}) => {
+  return (
+    <section
+      className={`w-full md:w-1/2 p-8 flex flex-col items-center justify-center transition-all duration-500 ${
+        isActive && isPlaying ? 'bg-yellow-400' : 'bg-gray-800'
+      } rounded-lg`}
+    >
+      <h2 className="text-4xl font-semibold text-white mb-6">
+        {!isPlaying && score >= 100 ? 'برنده!' : `بازیکن ${playerNumber}`}
+      </h2>
+      <p className="text-6xl text-red-500 font-semibold mb-8">{score}</p>
+
+      <div className="bg-red-500 text-white p-4 rounded-lg w-full max-w-xs">
+        <p className="text-center text-lg uppercase mb-2">امتیاز فعلی</p>
+        <p className="text-center text-4xl">{isActive ? currentScore : 0}</p>
+      </div>
+    </section>
+  );
+};
 
 const PigGame: React.FC = () => {
   // Game states
@@ -67,38 +102,22 @@ const PigGame: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-pink-600 p-4">
       <main className="relative bg-opacity-35 backdrop-blur-lg flex flex-col md:flex-row w-full max-w-4xl rounded-xl shadow-lg overflow-hidden">
         {/* Player 1 Panel */}
-        <section
-          className={`w-full md:w-1/2 p-8 flex flex-col items-center justify-center transition-all duration-500 ${
-            activePlayer === 0 && playing ? 'bg-yellow-400' : 'bg-gray-800'
-          } rounded-lg`}
-        >
-          <h2 className="text-4xl font-semibold text-white mb-6">
-            {!playing && scores[0] >= 100 ? 'برنده!' : 'بازیکن 1'}
-          </h2>
-          <p className="text-6xl text-red-500 font-semibold mb-8">{scores[0]}</p>
-
-          <div className="bg-red-500 text-white p-4 rounded-lg w-full max-w-xs">
-            <p className="text-center text-lg uppercase mb-2">امتیاز فعلی</p>
-            <p className="text-center text-4xl">{activePlayer === 0 ? currentScore : 0}</p>
-          </div>
-        </section>
+        <PlayerPanel
+          playerNumber={1}
+          score={scores[0]}
+          currentScore={currentScore}
+          isActive={activePlayer === 0}
+          isPlaying={playing}
+        />
 
         {/* Player 2 Panel */}
-        <section
-          className={`w-full md:w-1/2 p-8 flex flex-col items-center justify-center transition-all duration-500 ${
-            activePlayer === 1 && playing ? 'bg-yellow-400' : 'bg-gray-800'
-          } rounded-lg`}
-        >
-          <h2 className="text-4xl font-semibold text-white mb-6">
-            {!playing && scores[1] >= 100 ? 'برنده!' : 'بازیکن 2'}
-          </h2>
-          <p className="text-6xl text-red-500 font-semibold mb-8">{scores[1]}</p>
-
-          <div className="bg-red-500 text-white p-4 rounded-lg w-full max-w-xs">
-            <p className="text-center text-lg uppercase mb-2">امتیاز فعلی</p>
-            <p className="text-center text-4xl">{activePlayer === 1 ? currentScore : 0}</p>
-          </div>
-        </section>
+        <PlayerPanel
+          playerNumber={2}
+          score={scores[1]}
+          currentScore={currentScore}
+          isActive={activePlayer === 1}
+          isPlaying={playing}
+        />
 
         {/* Game Controls */}
         <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center mt-8">
@@ -113,9 +132,11 @@ const PigGame: React.FC = () => {
           {/* Dice Image */}
           {diceNumber && (
             <div className="my-4">
-              <img
+              <Image
                 src={`/pig-game/dice-${diceNumber}.png`}
                 alt={`تاس ${diceNumber}`}
+                width={96}
+                height={96}
                 className="h-24 w-24"
               />
             </div>
@@ -159,7 +180,7 @@ const PigGame: React.FC = () => {
             می‌دهد. بعد از آن، نوبت بازیکن بعدی است
           </li>
           <li>
-            بازیکن می‌تواند امتیاز خود را 'نگه دارد'، به این معنی که امتیاز فعلی
+            بازیکن می‌تواند امتیاز خود را &quot;نگه دارد&quot;، به این معنی که امتیاز فعلی
             آنها به امتیاز کلی آنها اضافه می‌شود. بعد از آن، نوبت بازیکن بعدی
             است
           </li>

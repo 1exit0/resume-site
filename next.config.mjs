@@ -1,8 +1,13 @@
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  reactStrictMode: true,
-  // هر تنظیم دیگری که داری
+  // این خط رو حذف یا کامنت کن 👇
+  // output: 'export',
+
+  images: {
+    // این خط هم نیاز نیست مگر اینکه بخوای دستی غیرفعال کنی
+    unoptimized: false,
+  },
 };
 
 export default nextConfig;

@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -16,18 +16,26 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSuccess(false);
+    setError('');
 
     try {
-      const response = await axios.post('https://formspree.io/f/xvgaoyad', form, {
+      const response = await fetch('https://formspree.io/f/xvgaoyad', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         setSuccess(true);
         setForm({ name: '', email: '', message: '' });
+      } else {
+        const data = await response.json();
+        setError(data.error || 'خطا در ارسال فرم.');
       }
     } catch (error) {
       console.error('خطا در ارسال فرم:', error);
+      setError('خطایی در ارتباط با سرور رخ داد.');
     }
   };
 
@@ -64,6 +72,17 @@ export default function ContactPage() {
           className="bg-green-600 text-white text-center py-2 rounded-lg mb-4"
         >
           پیام شما با موفقیت ارسال شد!
+        </motion.p>
+      )}
+
+      {error && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="bg-red-600 text-white text-center py-2 rounded-lg mb-4"
+        >
+          {error}
         </motion.p>
       )}
 

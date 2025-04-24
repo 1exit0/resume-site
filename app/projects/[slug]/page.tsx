@@ -1,6 +1,4 @@
-'use client';
 import { notFound } from 'next/navigation';
-import { motion } from 'framer-motion';
 
 const projectData = [
   {
@@ -22,52 +20,38 @@ const projectData = [
   },
 ];
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return projectData.map((project) => ({ slug: project.slug }));
 }
 
-export default function ProjectDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const project = projectData.find((p) => p.slug === params.slug);
+// اصلاح نوع ProjectPageProps
+interface ProjectPageProps {
+  params: Promise<{ slug: string }>; // params به صورت Promise تعریف می‌شود
+}
+
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
+  const { slug } = await params; // استفاده از await برای دسترسی به slug
+
+  const project = projectData.find((p) => p.slug === slug);
 
   if (!project) return notFound();
 
   return (
     <div className="min-h-screen py-8 px-4 space-y-6">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-bold text-white text-center"
-      >
+      <h1 className="text-3xl font-bold text-white text-center">
         پروژه: {project.title}
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="text-gray-400 text-center"
-      >
-        {project.description}
-      </motion.p>
+      </h1>
+      <p className="text-gray-400 text-center">{project.description}</p>
 
       {project.embed ? (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="w-full h-[85vh] rounded-xl overflow-hidden shadow-lg"
-        >
+        <div className="w-full h-[85vh] rounded-xl overflow-hidden shadow-lg">
           <iframe
             src={project.link}
             title={project.title}
             className="w-full h-full border-0"
             allowFullScreen
           />
-        </motion.div>
+        </div>
       ) : (
         <a
           href={project.link}

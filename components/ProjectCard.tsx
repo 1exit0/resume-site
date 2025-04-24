@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 
-const MotionAnchor = motion<'a'>('a');
-
 type ProjectCardProps = {
   title: string;
   description: string;
@@ -35,7 +33,7 @@ export default function ProjectCard({
       </div>
     </motion.div>
   ) : (
-    <MotionAnchor
+    <motion.a
       href={link}
       target="_blank"
       rel="noopener noreferrer"
@@ -45,6 +43,6 @@ export default function ProjectCard({
     >
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-gray-400 text-sm">{description}</p>
-    </MotionAnchor>
+    </motion.a>
   );
 }
