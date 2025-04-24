@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import ProjectCard from '../../components/ProjectCard'; // فرض می‌کنیم که کامپوننت ProjectCard رو قبلاً ساختیم
 

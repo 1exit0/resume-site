@@ -1,3 +1,4 @@
+'use client';
 import { JSX } from 'react';
 import {
   SiReact,
@@ -9,7 +10,7 @@ import {
   SiTypescript,
   SiPrisma,
   SiPostgresql,
-  SiMongodb
+  SiMongodb,
 } from 'react-icons/si';
 
 const icons: Record<string, JSX.Element> = {
@@ -33,11 +34,20 @@ const icons: Record<string, JSX.Element> = {
 };
 
 type SkillListProps = {
-  skills: Record<string, string[]>; 
+  skills: Record<string, string[]>;
 };
 
 const categorizedSkills = {
-  Frontend: ['React', 'Next.js', 'TailwindCSS', 'Shadcn', 'TypeScript', 'Router 6', 'Query 5', 'Redux Toolkit'],
+  Frontend: [
+    'React',
+    'Next.js',
+    'TailwindCSS',
+    'Shadcn',
+    'TypeScript',
+    'Router 6',
+    'Query 5',
+    'Redux Toolkit',
+  ],
   'Validation / Tools': ['Zod', 'Axios', 'Git'],
   Backend: ['Node.js', 'Express', 'Prisma', 'Django'],
   Database: ['PostgreSQL', 'MongoDB'],

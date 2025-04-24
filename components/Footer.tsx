@@ -1,3 +1,4 @@
+'use client';
 function Footer() {
   return (
     <footer className="border-t border-gray-700 py-6 mt-10 text-center text-sm text-gray-400 space-y-2">

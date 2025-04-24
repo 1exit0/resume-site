@@ -1,4 +1,5 @@
 // app/projects/pig-game/page.tsx
+'use client';
 import PigGame from '@/components/PigGame';
 
 export default function PigGameProject() {
